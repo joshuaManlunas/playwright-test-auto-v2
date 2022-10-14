@@ -369,9 +369,6 @@ test.describe('Routing', () => {
     await page.locator('.filters >> text=Completed').click();
     // Page change - completed items.
     await expect(page.locator('.filters >> text=Completed')).toHaveClass('selected');
-    // Test failure
-    await expect(true).toBeFalsy()
-
   });
 });
 

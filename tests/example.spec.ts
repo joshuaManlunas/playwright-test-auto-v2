@@ -24,7 +24,3 @@ test('@jomans homepage has Playwright in title and get started link linking to t
   // Expects the URL to contain intro.
   await expect(page).toHaveURL(/.*intro/);
 });
-
-test('@api testing api calls', async ()=> {
-
-})
