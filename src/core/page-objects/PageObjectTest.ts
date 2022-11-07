@@ -5,16 +5,9 @@ import {PageObject} from "./iPageObject";
 import {envTestData} from "../../../store/data-types";
 
 export class PageObjectTest implements Observer, PageObject {
-    page: Page
     testData: envTestData
 
-    private constructor() {
-        // Set things when object is instantiated
-    }
-
-    newPomInstance() {
-        return new PageObjectTest()
-    }
+    constructor(readonly page: Page) { }
 
     getDataUpdate(data: envTestData): void {
         logger.info( `[${this.constructor.name}] Receiving test data...[${Object.keys(data)}]`)

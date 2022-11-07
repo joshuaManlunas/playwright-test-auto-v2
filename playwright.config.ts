@@ -1,6 +1,7 @@
 import type { PlaywrightTestConfig } from '@playwright/test';
 import { devices } from '@playwright/test';
 
+// @ts-ignore
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -37,7 +38,9 @@ const config: PlaywrightTestConfig = {
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "retain-on-failure" ,
     video: "retain-on-failure",
-    screenshot: "only-on-failure"
+    screenshot: "only-on-failure",
+    // custom options for test id.
+    testIdAttribute: "data-test"
 
   },
 

@@ -11,18 +11,18 @@ type PageObjects = {
     samplePageObject: PageObjectTest
 }
 // instantiate all objects that would like to subscribe to test data
-const pom = PageObjectTest.prototype.newPomInstance()
+
 
 export const test = base.extend<TestDataPublisher & PageObjects>({
-    testDataPublisher: async ({}, use) => {
+    testDataPublisher: async ({samplePageObject}, use) => {
         const dataStore = await new TestDataStorePublisher()
-        await dataStore.addSubscriber(pom)
+        await dataStore.addSubscriber(samplePageObject)
         await dataStore.getTestData(process.env.ENV)
         await use(dataStore)
     },
     samplePageObject: async ({page}, use) => {
-        pom.page = page
-        await use(pom)
+        const samplePageObject = await new PageObjectTest(page)
+        await use(samplePageObject)
     }
 })
 
