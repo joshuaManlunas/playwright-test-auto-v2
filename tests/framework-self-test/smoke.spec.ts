@@ -1,7 +1,11 @@
 import {test, expect} from "../Framework.Bootstrap";
 import {logger} from "../../Framework.Initialise";
 
-test('@SMOKE That base framework features work as expected ', async ({testDataPublisher, samplePageObject}) => {
+test('@JOMANS That base framework features work as expected ', async ({
+                                                                          testDataPublisher,
+                                                                          samplePageObject,
+                                                                          apiMux
+                                                                      }) => {
     const {page, testData} = samplePageObject
     logger.info('Env variable at test file is: ' + process.env.ENV)
     let loadedTestData = samplePageObject.showCurrentTestDataObject()
@@ -18,5 +22,14 @@ test('@SMOKE That base framework features work as expected ', async ({testDataPu
     // check that value of globalTestUser is not null
     await expect(loadedTestData['globalTestUser']).not.toBeNull()
 
+    // check that api calls can be made using the apiMux object
+    let response = await apiMux.sendRequest('GET', 'https://jsonplaceholder.typicode.com/todos/1')
+    await expect(response.status()).toBe(200)
+    response = await response.json()
 
+    // assert object key value
+    await expect(response.userId).toBe(1)
+
+    // assert that response object have 4 keys
+    await expect(Object.keys(response)).toHaveLength(4)
 });
