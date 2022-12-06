@@ -12,6 +12,7 @@ async function setEnvironmentVariables() {
     const defaultEnvironment = 'local'
     logger.info('Setting environment variables...')
     require('dotenv').config({ path: `environment/.env.${ process.env.TARGET || defaultEnvironment }`});
+    logger.info('Environment variables set...')
 }
 
 /**

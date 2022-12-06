@@ -3,6 +3,7 @@ import {Page} from "@playwright/test";
 import {Observer} from "../../../store/iPublisherObserver";
 import {envTestData} from "../../../store/data/data-types";
 import {logger} from "../../../Framework.Initialise";
+import {httpLogEvents} from "../helpers/http";
 
 export class ApiMux implements IApiObject, Observer {
     page: Page
@@ -10,6 +11,7 @@ export class ApiMux implements IApiObject, Observer {
 
     constructor(page: Page) {
         this.page = page
+        httpLogEvents(this.page)
     }
 
 
