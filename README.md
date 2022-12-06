@@ -56,7 +56,7 @@ Joshua Manlunas -- initial work
 
 ## License
 
-This project is licensed under the GNU General Public License (GPL) License - see the LICENSE.md file for details
+This project is licensed under the GNU General Public License (GPL) License - see the LICENSE file for details
 
 ## How to Contribute
 * Fork or clone the project
