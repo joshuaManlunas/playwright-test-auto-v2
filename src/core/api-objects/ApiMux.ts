@@ -23,8 +23,8 @@ export class ApiMux implements IApiObject, Observer {
      *
      * @param method: string -- GET, POST, PUT, DELETE
      * @param url: string -- URL of API
-     * @param header: object -- Call header in JSON format
-     * @param body: object -- Call body in JSON format
+     * @param header(optional): object -- Call header in JSON format
+     * @param body(optional): object -- Call body in JSON format
      * @return: Promise<any> -- Response from API that needs to be parsed and handled
      */
     async sendRequest(method: string, url: string, header?: object, body?: object): Promise<any> {

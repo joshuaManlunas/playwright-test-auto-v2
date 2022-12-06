@@ -1,7 +1,8 @@
 import {test, expect} from "../Framework.Bootstrap";
 import {logger} from "../../Framework.Initialise";
+import {decrypt, encrypt} from "../../src/core/helpers/crypter";
 
-test('@JOMANS That base framework features work as expected ', async ({
+test('@SMOKE That base framework features work as expected ', async ({
                                                                           testDataPublisher,
                                                                           samplePageObject,
                                                                           apiMux
@@ -10,7 +11,7 @@ test('@JOMANS That base framework features work as expected ', async ({
     logger.info('Env variable at test file is: ' + process.env.ENV)
     let loadedTestData = samplePageObject.showCurrentTestDataObject()
 
-    // Check that an object is returned
+    // Check that an object is returned for test data
     await expect(typeof loadedTestData).toBe('object')
 
     // check that keys targetUrl key is present
@@ -32,4 +33,9 @@ test('@JOMANS That base framework features work as expected ', async ({
 
     // assert that response object have 4 keys
     await expect(Object.keys(response)).toHaveLength(4)
+
+    // check that strings can be encrypted and decrypted
+    const encrypted = encrypt('Hello World', 'changeMe')
+    const decrypted = decrypt(encrypted, 'changeMe')
+    await expect(decrypted).toBe('Hello World')
 });
