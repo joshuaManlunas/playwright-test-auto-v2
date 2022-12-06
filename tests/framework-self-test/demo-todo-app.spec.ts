@@ -10,7 +10,7 @@ const TODO_ITEMS = [
   'book a doctors appointment'
 ];
 
-test.describe('New Todo', () => {
+test.describe('@SMOKE New Todo', () => {
   test('should allow me to add todo items', async ({ page }) => {
     // Create 1st todo.
     await page.locator('.new-todo').fill(TODO_ITEMS[0]);
@@ -68,7 +68,7 @@ test.describe('New Todo', () => {
   });
 });
 
-test.describe('Mark all as completed', () => {
+test.describe('@SMOKE Mark all as completed', () => {
   test.beforeEach(async ({ page }) => {
     await createDefaultTodos(page);
     await checkNumberOfTodosInLocalStorage(page, 3);
@@ -117,7 +117,7 @@ test.describe('Mark all as completed', () => {
   });
 });
 
-test.describe('Item', () => {
+test.describe('@SMOKE Item', () => {
 
   test('should allow me to mark items as complete', async ({ page }) => {
     // Create two items.
@@ -181,7 +181,7 @@ test.describe('Item', () => {
   });
 });
 
-test.describe('Editing', () => {
+test.describe('@SMOKE Editing', () => {
   test.beforeEach(async ({ page }) => {
     await createDefaultTodos(page);
     await checkNumberOfTodosInLocalStorage(page, 3);
@@ -243,7 +243,7 @@ test.describe('Editing', () => {
   });
 });
 
-test.describe('Counter', () => {
+test.describe('@SMOKE Counter', () => {
   test('should display the current number of todo items', async ({ page }) => {
     await page.locator('.new-todo').fill(TODO_ITEMS[0]);
     await page.locator('.new-todo').press('Enter');
@@ -257,7 +257,7 @@ test.describe('Counter', () => {
   });
 });
 
-test.describe('Clear completed button', () => {
+test.describe('@SMOKE Clear completed button', () => {
   test.beforeEach(async ({ page }) => {
     await createDefaultTodos(page);
   });
@@ -282,7 +282,7 @@ test.describe('Clear completed button', () => {
   });
 });
 
-test.describe('Persistence', () => {
+test.describe('@SMOKE Persistence', () => {
   test('should persist its data', async ({ page }) => {
     for (const item of TODO_ITEMS.slice(0, 2)) {
       await page.locator('.new-todo').fill(item);
@@ -304,7 +304,7 @@ test.describe('Persistence', () => {
   });
 });
 
-test.describe('Routing', () => {
+test.describe('@SMOKE Routing', () => {
   test.beforeEach(async ({ page }) => {
     await createDefaultTodos(page);
     // make sure the app had a chance to save updated todos in storage

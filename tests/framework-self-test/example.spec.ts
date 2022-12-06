@@ -1,7 +1,7 @@
-import { test, expect} from "./Framework.Bootstrap";
-import {logger} from "../Framework.Initialise";
+import { test, expect} from "../Framework.Bootstrap";
+import {logger} from "../../Framework.Initialise";
 
-test('@jomans homepage has Playwright in title and get started link linking to the intro page',
+test('@SMOKE homepage has Playwright in title and get started link linking to the intro page',
     async ({ testDataPublisher, samplePageObject}) => {
   const { page, testData } = samplePageObject
   logger.info('Env variable at test file is: ' + process.env.ENV)

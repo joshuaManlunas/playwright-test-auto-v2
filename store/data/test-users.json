@@ -1,0 +1,22 @@
+{
+  "LOCAL": {
+    "defaultUser": { "userId": "11111", "password": "password2" },
+    "secondaryUser": { "userId": "11111XX", "password": "password23" },
+    "globalTestUser": { "userId": "11111XXX", "password": "password25" }
+  },
+  "ACCEPTANCE": {
+    "defaultUser": { "userId": "22222", "password": "password2" },
+    "secondaryUser": { "userId": "22222XX", "password": "password23" },
+    "globalTestUser": { "userId": "22222XXX", "password": "password25" }
+  },
+  "INTEGRATION": {
+    "defaultUser": { "userId": "333333", "password": "password1" },
+    "secondaryUser": { "userId": "333333XX", "password": "password13" },
+    "globalTestUser": { "userId": "333333XXX", "password": "password15" }
+  },
+  "REHEARSAL": {
+    "defaultUser": { "userId": "444444", "password": "password1" },
+    "secondaryUser": { "userId": "444444XX", "password": "password13" },
+    "globalTestUser": { "userId": "444444XXX", "password": "password15" }
+  }
+}

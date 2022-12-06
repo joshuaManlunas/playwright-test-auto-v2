@@ -1,4 +1,4 @@
-import {envTestData} from "./data-types";
+import {envTestData} from "./data/data-types";
 
 export interface Publisher {
     addSubscriber(observer: Observer): void
@@ -6,5 +6,5 @@ export interface Publisher {
 }
 
 export interface Observer {
-    getDataUpdate(data: envTestData): void
+    getDataUpdate(data: object): void
 }

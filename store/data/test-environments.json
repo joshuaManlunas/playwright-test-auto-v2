@@ -1,0 +1,14 @@
+{
+  "LOCAL": {
+    "targetUrl": "https://playwright.dev/"
+  },
+  "ACCEPTANCE": {
+    "targetUrl": "https://localhost.com"
+  },
+  "INTEGRATION": {
+    "targetUrl": "https://localhost.com"
+  },
+  "REHEARSAL": {
+    "targetUrl": "https://localhost.com"
+  }
+}

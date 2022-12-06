@@ -2,7 +2,7 @@ import {logger} from "../../../Framework.Initialise";
 import {Observer} from "../../../store/iPublisherObserver";
 import {Page} from "@playwright/test";
 import {PageObject} from "./iPageObject";
-import {envTestData} from "../../../store/data-types";
+import {envTestData} from "../../../store/data/data-types";
 
 export class PageObjectTest implements Observer, PageObject {
     testData: envTestData
@@ -14,8 +14,10 @@ export class PageObjectTest implements Observer, PageObject {
         this.testData = data
     }
 
-    showCurrentTestDataObject() {
+    // Show current test data in sample page object for testing
+    showCurrentTestDataObject(): object {
         const data = this.testData
-        logger.info('CURRENT URL IS: ' + JSON.stringify(data))
+        logger.info('CURRENT TEST DATA: ' + JSON.stringify(data))
+        return data
     }
 }

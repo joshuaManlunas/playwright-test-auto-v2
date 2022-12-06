@@ -1,5 +1,8 @@
 const crypto = require('crypto-js')
 
+/**
+ * It is highly recommended NOT to keep this key in here. Rather use an environment variable to store it.
+ */
 const key = process.env.CRYPTO_KEY || 'changeMe'
 
 // encrypt string with crypto-js

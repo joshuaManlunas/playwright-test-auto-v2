@@ -1,7 +1,7 @@
 import {logger} from "../Framework.Initialise";
 import * as path from "path";
 import {Observer, Publisher} from "./iPublisherObserver";
-import {envTestData} from "./data-types";
+import {envTestData} from "./data/data-types";
 
 export class TestDataStorePublisher implements Publisher {
     private dataSubscribers: Array<Observer> = []
@@ -15,7 +15,7 @@ export class TestDataStorePublisher implements Publisher {
         logger.info(`[${observer.constructor.name}] has been added to dataSubscribers...`)
     }
 
-    publishData(data: envTestData): void {
+    publishData(data: object): void {
         logger.info('Publishing test data to observers')
         for (const dataSubscriber of this.dataSubscribers) {
             dataSubscriber.getDataUpdate(data)
@@ -24,13 +24,19 @@ export class TestDataStorePublisher implements Publisher {
 
     async getTestData(testEnv: string) {
         const fsExtra = require('fs-extra')
-        const fullPath = path.resolve(__dirname, 'test-data-store.json')
+        const testEnvironments = await fsExtra.readJsonSync(path.resolve(__dirname, 'data','test-environments.json'))
+        const testUsers = await fsExtra.readJsonSync(path.resolve(__dirname, 'data','test-users.json'))
 
         logger.info(`Retrieving test data for: [${testEnv}]`)
 
         try {
-            const data: object = await fsExtra.readJsonSync(fullPath)
-            this.publishData(data[`${testEnv}`] as envTestData)
+
+            let completeTestData = {
+                ...testEnvironments[`${testEnv}`],
+                ...testUsers[`${testEnv}`]
+            }
+
+            this.publishData( completeTestData as object)
         } catch (error) {
             logger.error(error)
         }
