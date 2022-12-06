@@ -45,7 +45,7 @@ npm run test:smoke
 * Environment variables are fetched from the `.env` files in the `environments` directory. The `Framework.Initialise.ts` file is responsible for loading the environment variables.
 
 ## Authors
-Joshua Manlunas -- initial work  
+Joshua Manlunas -- original work  
 
 ## Version History
 
@@ -64,6 +64,8 @@ This project is licensed under the GNU General Public License (GPL) License - se
 * Commit your changes
 * Push to the branch
 * Open a pull request
+
+### Give credit to the original author if you're using this project as a base for your own project.
 
 ## Acknowledgments
 
