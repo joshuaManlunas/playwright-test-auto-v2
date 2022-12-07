@@ -2,7 +2,7 @@ import {test, expect} from "../Framework.Bootstrap";
 import {logger} from "../../Framework.Initialise";
 import {decrypt, encrypt} from "../../src/core/helpers/crypter";
 
-test('@SMOKE That base framework features work as expected ', async ({
+test('@SMOKE @JOMANS That base framework features work as expected ', async ({
                                                                           testDataPublisher,
                                                                           samplePageObject,
                                                                           apiMux

@@ -1,5 +1,5 @@
 import { createLogger, transports, format } from "winston";
-import {emptydir, emptydirSync} from "fs-extra";
+import {emptydir, emptydirSync, truncateSync} from "fs-extra";
 import * as path from "path";
 
 /**
@@ -42,8 +42,9 @@ export const logger = createLogger({
  */
 const emptyLogs = async ()=> {
     try {
-        await emptydirSync(path.resolve(__dirname, 'logs'))
-        logger.info('Log files removed...')
+        // truncate the log file
+        await truncateSync(path.join(__dirname, '/logs/combined.log'), 0)
+        logger.info('Log files reset...')
     } catch (error) {
         logger.error(error)
     }
