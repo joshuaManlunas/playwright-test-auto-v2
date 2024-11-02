@@ -1,7 +1,12 @@
-import type { PlaywrightTestConfig } from '@playwright/test';
+import type { PlaywrightTestConfig, PlaywrightWorkerOptions } from '@playwright/test';
 import { devices } from '@playwright/test';
 
-// @ts-ignore
+declare module '@playwright/test' {
+  interface PlaywrightWorkerOptions {
+    mockRecordMode?: boolean;
+  }
+}
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -26,7 +31,14 @@ const config: PlaywrightTestConfig = {
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [
+    ['html'],
+    ['allure-playwright', {
+      detail: true,
+      outputFolder: 'allure-results',
+      suiteTitle: false
+    }]
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     ignoreHTTPSErrors: true,
@@ -36,12 +48,14 @@ const config: PlaywrightTestConfig = {
     // baseURL: 'http://localhost:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: "on" ,
+    trace: "on",
     video: "on",
     screenshot: "only-on-failure",
     // custom options for test id.
-    testIdAttribute: "data-test"
+    testIdAttribute: "data-test",
 
+    // Custom option for API mock recording
+    mockRecordMode: process.env.MOCK_RECORD_MODE === 'true',
   },
 
   /* Configure projects for major browsers */
