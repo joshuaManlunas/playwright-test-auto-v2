@@ -6,7 +6,10 @@
   "scripts": {
     "test:smoke": "npx playwright test --grep=@SMOKE",
     "test": "npx playwright test",
-    "test:report": "npx playwright show-report"
+    "test:report": "npx playwright show-report",
+    "allure:generate": "allure generate ./allure-results --clean",
+    "allure:open": "allure open ./allure-report",
+    "allure:report": "npm run allure:generate && npm run allure:open"
   },
   "keywords": [],
   "author": "",
@@ -14,7 +17,6 @@
   "devDependencies": {
     "@playwright/test": "^1.48.2",
     "@types/lodash": "^4.17.13",
-    "allure-playwright": "^3.0.6",
     "ts-node": "^10.9.2"
   },
   "dependencies": {
