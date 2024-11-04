@@ -1,15 +1,21 @@
-import {test, expect} from "../Framework.Bootstrap";
-import {logger} from "../../Framework.Initialise";
-import {decrypt, encrypt} from "../../src/core/helpers/crypter";
+import { test, expect } from "../Framework.Bootstrap";
+import { logger } from "../../Framework.Initialise";
+import { decrypt, encrypt } from "../../src/core/helpers/crypter";
+
+// Add this interface before the test
+interface TestData {
+    targetUrl: string;
+    globalTestUser: any; // or specify a more specific type if known
+}
 
 test('@SMOKE @JOMANS That base framework features work as expected ', async ({
-                                                                          testDataPublisher,
-                                                                          samplePageObject,
-                                                                          apiMux
-                                                                      }) => {
-    const {page, testData} = samplePageObject
+    testDataPublisher,
+    samplePageObject,
+    apiMux
+}) => {
+    const { page, testData } = samplePageObject
     logger.info('Env variable at test file is: ' + process.env.ENV)
-    let loadedTestData = samplePageObject.showCurrentTestDataObject()
+    let loadedTestData = samplePageObject.showCurrentTestDataObject() as TestData
 
     // Check that an object is returned for test data
     await expect(typeof loadedTestData).toBe('object')

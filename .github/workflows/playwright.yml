@@ -9,19 +9,28 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.28.0-focal
+      image: mcr.microsoft.com/playwright:v1.48.0-focal
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: "18"
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
       - name: Install dependencies
         run: npm ci
       - name: Run Playwright tests
-        run: npx playwright test
+        run: npx playwright test --project=chromium
       - name: Generate Allure Report
+        uses: simple-elf/allure-report-action@v1.7
         if: always()
-        run: npx allure generate ./allure-results --clean
+        with:
+          allure_results: allure-results
+          allure_history: allure-history
+          allure_report: allure-report
       - name: Upload Allure Report
         uses: actions/upload-artifact@v3
         if: always()

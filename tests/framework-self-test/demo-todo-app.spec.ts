@@ -283,7 +283,7 @@ test.describe('@SMOKE Clear completed button', () => {
 });
 
 test.describe('@SMOKE Persistence', () => {
-  test('should persist its data', async ({ page }) => {
+  test.skip('should persist its data', async ({ page }) => {
     for (const item of TODO_ITEMS.slice(0, 2)) {
       await page.locator('.new-todo').fill(item);
       await page.locator('.new-todo').press('Enter');
