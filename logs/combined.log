@@ -1,21 +1,35 @@
-04-11-2024 20:45:48 [FRAMEWORK] [INFO]: Initializing Test Automation Framework...
-04-11-2024 20:45:48 [FRAMEWORK] [INFO]: Setting environment variables...
-04-11-2024 20:45:48 [FRAMEWORK] [INFO]: Environment variables set...
-04-11-2024 20:45:48 [FRAMEWORK] [INFO]: Emptying logs directory...
-04-11-2024 20:45:48 [FRAMEWORK] [INFO]: Log files reset...
-04-11-2024 20:46:03 [FRAMEWORK] [INFO]: Mock data directory: /Users/joshuamanlunas/PROJECTS/PUBLIC_REPOS/playwright-test-auto-v2/store/mock-data
-04-11-2024 20:46:03 [FRAMEWORK] [INFO]: Loaded mock data from users.json
-04-11-2024 20:49:26 [FRAMEWORK] [INFO]: Mock data directory: /Users/joshuamanlunas/PROJECTS/PUBLIC_REPOS/playwright-test-auto-v2/store/mock-data
-04-11-2024 20:49:26 [FRAMEWORK] [INFO]: Loaded mock data from get-https___jsonplaceholder_typicode_com_users.json
-04-11-2024 20:49:26 [FRAMEWORK] [INFO]: Cleared all API mocks
-04-11-2024 20:49:32 [FRAMEWORK] [INFO]: Mock data directory: /Users/joshuamanlunas/PROJECTS/PUBLIC_REPOS/playwright-test-auto-v2/store/mock-data
-04-11-2024 20:49:32 [FRAMEWORK] [INFO]: Mock data directory: /Users/joshuamanlunas/PROJECTS/PUBLIC_REPOS/playwright-test-auto-v2/store/mock-data
-04-11-2024 20:49:32 [FRAMEWORK] [INFO]: Loaded mock data from get-https___jsonplaceholder_typicode_com_users.json
-04-11-2024 20:49:32 [FRAMEWORK] [INFO]: Mock recording mode enabled
-04-11-2024 20:49:32 [FRAMEWORK] [INFO]: Recorded response for GET https://jsonplaceholder.typicode.com/users
-04-11-2024 20:49:32 [FRAMEWORK] [INFO]: Ensuring mock data directory exists at: /Users/joshuamanlunas/PROJECTS/PUBLIC_REPOS/playwright-test-auto-v2/store/mock-data
-04-11-2024 20:49:32 [FRAMEWORK] [INFO]: Saved recorded response to get-https___jsonplaceholder_typicode_com_users.json
-04-11-2024 20:49:32 [FRAMEWORK] [INFO]: Mock recording mode disabled
-04-11-2024 20:49:32 [FRAMEWORK] [INFO]: Loaded mock data from get-https___jsonplaceholder_typicode_com_users.json
-04-11-2024 20:49:32 [FRAMEWORK] [INFO]: Cleared all API mocks
-04-11-2024 20:49:32 [FRAMEWORK] [INFO]: Cleared all API mocks
+04-11-2024 23:38:38 [FRAMEWORK] [INFO]: Initializing Test Automation Framework...
+04-11-2024 23:38:38 [FRAMEWORK] [INFO]: Setting environment variables...
+04-11-2024 23:38:38 [FRAMEWORK] [INFO]: Environment variables set...
+04-11-2024 23:38:38 [FRAMEWORK] [INFO]: Emptying logs directory...
+04-11-2024 23:38:38 [FRAMEWORK] [INFO]: Log files reset...
+04-11-2024 23:38:42 [FRAMEWORK] [INFO]: Initialising Test Data Publisher...
+04-11-2024 23:38:42 [FRAMEWORK] [INFO]: [PageObjectTest] has been added to dataSubscribers...
+04-11-2024 23:38:42 [FRAMEWORK] [INFO]: [ApiMux] has been added to dataSubscribers...
+04-11-2024 23:38:42 [FRAMEWORK] [INFO]: Retrieving test data for: [LOCAL]
+04-11-2024 23:38:42 [FRAMEWORK] [INFO]: Publishing test data to observers
+04-11-2024 23:38:42 [FRAMEWORK] [INFO]: [PageObjectTest] Receiving test data...[targetUrl,defaultUser,secondaryUser,globalTestUser]
+04-11-2024 23:38:42 [FRAMEWORK] [INFO]: [ApiMux] Receiving test data...[targetUrl,defaultUser,secondaryUser,globalTestUser]
+04-11-2024 23:38:42 [FRAMEWORK] [INFO]: Env variable at test file is: LOCAL
+04-11-2024 23:38:42 [FRAMEWORK] [INFO]: CURRENT TEST DATA: {"targetUrl":"https://playwright.dev/","defaultUser":{"userId":"11111","password":"password2"},"secondaryUser":{"userId":"11111XX","password":"password23"},"globalTestUser":{"userId":"11111XXX","password":"password25"}}
+04-11-2024 23:38:43 [FRAMEWORK] [INFO]: Mock data directory: /Users/joshuamanlunas/PROJECTS/PUBLIC_REPOS/playwright-test-auto-v2/store/mock-data
+04-11-2024 23:38:43 [FRAMEWORK] [INFO]: Mock recording mode enabled
+04-11-2024 23:38:43 [FRAMEWORK] [INFO]: Mock data directory: /Users/joshuamanlunas/PROJECTS/PUBLIC_REPOS/playwright-test-auto-v2/store/mock-data
+04-11-2024 23:38:43 [FRAMEWORK] [INFO]: Loaded mock data from get-https___jsonplaceholder_typicode_com_users.json
+04-11-2024 23:38:43 [FRAMEWORK] [INFO]: Initialising Test Data Publisher...
+04-11-2024 23:38:43 [FRAMEWORK] [INFO]: [PageObjectTest] has been added to dataSubscribers...
+04-11-2024 23:38:43 [FRAMEWORK] [INFO]: [ApiMux] has been added to dataSubscribers...
+04-11-2024 23:38:43 [FRAMEWORK] [INFO]: Retrieving test data for: [LOCAL]
+04-11-2024 23:38:43 [FRAMEWORK] [INFO]: Publishing test data to observers
+04-11-2024 23:38:43 [FRAMEWORK] [INFO]: [PageObjectTest] Receiving test data...[targetUrl,defaultUser,secondaryUser,globalTestUser]
+04-11-2024 23:38:43 [FRAMEWORK] [INFO]: [ApiMux] Receiving test data...[targetUrl,defaultUser,secondaryUser,globalTestUser]
+04-11-2024 23:38:43 [FRAMEWORK] [INFO]: Env variable at test file is: LOCAL
+04-11-2024 23:38:43 [FRAMEWORK] [INFO]: CURRENT TEST DATA: {"targetUrl":"https://playwright.dev/","defaultUser":{"userId":"11111","password":"password2"},"secondaryUser":{"userId":"11111XX","password":"password23"},"globalTestUser":{"userId":"11111XXX","password":"password25"}}
+04-11-2024 23:38:43 [FRAMEWORK] [INFO]: [ApiMux] Sending request to API...[https://jsonplaceholder.typicode.com/todos/1]
+04-11-2024 23:38:43 [FRAMEWORK] [INFO]: Recorded response for GET https://jsonplaceholder.typicode.com/users
+04-11-2024 23:38:43 [FRAMEWORK] [INFO]: Ensuring mock data directory exists at: /Users/joshuamanlunas/PROJECTS/PUBLIC_REPOS/playwright-test-auto-v2/store/mock-data
+04-11-2024 23:38:43 [FRAMEWORK] [INFO]: Saved recorded response to get-https___jsonplaceholder_typicode_com_users.json
+04-11-2024 23:38:43 [FRAMEWORK] [INFO]: Mock recording mode disabled
+04-11-2024 23:38:43 [FRAMEWORK] [INFO]: Loaded mock data from get-https___jsonplaceholder_typicode_com_users.json
+04-11-2024 23:38:43 [FRAMEWORK] [INFO]: Cleared all API mocks
+04-11-2024 23:38:43 [FRAMEWORK] [INFO]: Cleared all API mocks
