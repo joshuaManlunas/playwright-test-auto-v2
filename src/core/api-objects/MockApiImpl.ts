@@ -7,10 +7,29 @@ import * as fs from 'fs-extra';
 export class MockApiImpl implements MockApi {
     private recordMode: boolean = false;
     private recordedResponses: Map<string, any> = new Map();
+    private url: string = '';
+    private method: string = '';
+    private response: any;
     private readonly mockDataDir: string;
 
     constructor(private readonly page: Page) {
         this.mockDataDir = path.resolve(__dirname, '../../../store/mock-data');
+        logger.info(`Mock data directory: ${this.mockDataDir}`);
+    }
+
+    setUrl(url: string): this {
+        this.url = url;
+        return this;
+    }
+
+    setMethod(method: string): this {
+        this.method = method;
+        return this;
+    }
+
+    setResponse(response: any): this {
+        this.response = response;
+        return this;
     }
 
     setRecordMode(enabled: boolean): void {
@@ -26,42 +45,6 @@ export class MockApiImpl implements MockApi {
         const key = `${method}-${url}`;
         this.recordedResponses.set(key, response);
         logger.info(`Recorded response for ${method} ${url}`);
-    }
-
-    async saveRecordedResponses(): Promise<void> {
-        if (this.recordedResponses.size === 0) {
-            logger.info('No responses recorded');
-            return;
-        }
-
-        try {
-            // Ensure the directory exists, create it if it doesn't
-            await fs.ensureDir(this.mockDataDir);
-            logger.info(`Ensuring mock data directory exists at: ${this.mockDataDir}`);
-
-            for (const [key, response] of this.recordedResponses.entries()) {
-                try {
-                    const [method, url] = key.split('-');
-                    const fileName = `${method.toLowerCase()}-${url.replace(/[^a-zA-Z0-9]/g, '_')}.json`;
-                    const filePath = path.join(this.mockDataDir, fileName);
-
-                    // Create the file if it doesn't exist
-                    if (!await fs.pathExists(filePath)) {
-                        await fs.createFile(filePath);
-                        logger.info(`Created new mock file: ${fileName}`);
-                    }
-
-                    await fs.writeJson(filePath, response, { spaces: 2 });
-                    logger.info(`Saved recorded response to ${fileName}`);
-                } catch (error) {
-                    logger.error(`Failed to save recorded response for ${key}:`, error);
-                    // Continue with other files even if one fails
-                }
-            }
-        } catch (error) {
-            logger.error(`Failed to ensure mock data directory exists:`, error);
-            throw error; // Rethrow as this is a critical error
-        }
     }
 
     private async setupMock(
@@ -109,6 +92,45 @@ export class MockApiImpl implements MockApi {
                 await route.continue();
             }
         });
+    }
+
+    async saveRecordedResponses(): Promise<void> {
+
+        this.recordResponse(this.method, this.url, this.response);
+
+        if (this.recordedResponses.size === 0) {
+            logger.info('No responses recorded');
+            return;
+        }
+
+        try {
+            // Ensure the directory exists, create it if it doesn't
+            await fs.ensureDir(this.mockDataDir);
+            logger.info(`Ensuring mock data directory exists at: ${this.mockDataDir}`);
+
+            for (const [key, response] of this.recordedResponses.entries()) {
+                try {
+                    const [method, url] = key.split('-');
+                    const fileName = `${method.toLowerCase()}-${url.replace(/[^a-zA-Z0-9]/g, '_')}.json`;
+                    const filePath = path.join(this.mockDataDir, fileName);
+
+                    // Create the file if it doesn't exist
+                    if (!await fs.pathExists(filePath)) {
+                        await fs.createFile(filePath);
+                        logger.info(`Created new mock file: ${fileName}`);
+                    }
+
+                    await fs.writeJson(filePath, response, { spaces: 2 });
+                    logger.info(`Saved recorded response to ${fileName}`);
+                } catch (error) {
+                    logger.error(`Failed to save recorded response for ${key}:`, error);
+                    // Continue with other files even if one fails
+                }
+            }
+        } catch (error) {
+            logger.error(`Failed to ensure mock data directory exists:`, error);
+            throw error; // Rethrow as this is a critical error
+        }
     }
 
     async mockGet(url: string | RegExp, response: any): Promise<void> {
