@@ -1,5 +1,5 @@
 import { Page } from '@playwright/test';
-import { MockApi } from './iMockApi';
+import { MockApi, UpdatePolicy } from './iMockApi';
 import { logger } from '../../../Framework.Initialise';
 import * as path from 'path';
 import * as fs from 'fs-extra';
@@ -11,6 +11,8 @@ export class MockApiImpl implements MockApi {
     private method: string = '';
     private response: any;
     private readonly mockDataDir: string;
+    private updateMode: boolean = false;
+    private updatePolicies: Map<string, UpdatePolicy> = new Map();
 
     constructor(private readonly page: Page) {
         this.mockDataDir = path.resolve(__dirname, '../../../store/mock-data');
@@ -41,6 +43,32 @@ export class MockApiImpl implements MockApi {
         return this.recordMode;
     }
 
+    setUpdateMode(enabled: boolean): void {
+        this.updateMode = enabled;
+        logger.info(`Mock update mode ${enabled ? 'enabled' : 'disabled'}`);
+    }
+
+    isUpdateMode(): boolean {
+        return this.updateMode;
+    }
+
+    public setUpdatePolicy(url: string | RegExp, policy: UpdatePolicy): void {
+        const urlKey = url.toString();
+        this.updatePolicies.set(urlKey, {
+            enabled: policy.enabled,
+            allowedStatusCodes: policy.allowedStatusCodes || [200],
+            forceUpdate: policy.forceUpdate || false
+        });
+    }
+
+    public getUpdatePolicy(url: string | RegExp): UpdatePolicy | undefined {
+        return this.updatePolicies.get(url.toString());
+    }
+
+    public clearUpdatePolicies(): void {
+        this.updatePolicies.clear();
+    }
+
     private async recordResponse(method: string, url: string, response: any): Promise<void> {
         const key = `${method}-${url}`;
         this.recordedResponses.set(key, response);
@@ -54,24 +82,49 @@ export class MockApiImpl implements MockApi {
     ): Promise<void> {
         await this.page.route(url, async (route) => {
             if (route.request().method() === method) {
-                if (this.recordMode) {
+                const policy = this.getUpdatePolicy(url);
+
+                if ((this.recordMode || this.updateMode) || (policy && policy.enabled)) {
                     try {
-                        // In record mode, make the actual request and save the response
+                        // Make the actual request
                         const response = await route.fetch();
                         const responseBody = await response.json();
-                        const recordedResponse = {
-                            status: response.status(),
-                            headers: response.headers(),
-                            body: responseBody
-                        };
-                        await this.recordResponse(method, url.toString(), recordedResponse);
+                        const status = response.status();
+
+                        const shouldUpdate =
+                            this.updateMode ||
+                            (policy?.enabled &&
+                                policy.allowedStatusCodes?.includes(status) &&
+                                (policy.forceUpdate || this.isSimilarResponse(responseBody, response)));
+
+                        if (shouldUpdate) {
+                            const recordedResponse = {
+                                status: status,
+                                headers: response.headers(),
+                                body: responseBody
+                            };
+
+                            // Update existing mock file if it exists
+                            const fileName = `${method.toLowerCase()}-${url.toString().replace(/[^a-zA-Z0-9]/g, '_')}.json`;
+                            const filePath = path.join(this.mockDataDir, fileName);
+
+                            if (await fs.pathExists(filePath)) {
+                                await fs.writeJson(filePath, recordedResponse, { spaces: 2 });
+                                logger.info(`Updated mock file: ${fileName}`);
+                            }
+                        }
+
+                        if (this.recordMode) {
+                            await this.recordResponse(method, url.toString(), responseBody);
+                        }
+
                         await route.fulfill({
-                            status: response.status(),
+                            status: status,
                             headers: response.headers(),
                             body: JSON.stringify(responseBody)
                         });
                     } catch (error) {
-                        logger.error(`Failed to record response for ${method} ${url}:`, error);
+                        logger.error(`Failed to ${this.updateMode ? 'update' : 'record'} response for ${method} ${url}:`, error);
                         await route.continue();
                     }
                 } else {
@@ -92,6 +145,12 @@ export class MockApiImpl implements MockApi {
                 await route.continue();
             }
         });
+    }
+
+    private isSimilarResponse(newResponse: any, existingResponse: any): boolean {
+        // Implement your comparison logic here
+        // This is a simple example - you might want more sophisticated comparison
+        return JSON.stringify(newResponse) === JSON.stringify(existingResponse);
     }
 
     async saveRecordedResponses(): Promise<void> {

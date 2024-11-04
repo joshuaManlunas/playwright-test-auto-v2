@@ -1,3 +1,23 @@
+export interface UpdatePolicy {
+    /**
+     * When true, the mock will be updated with the real API response
+     * if the response status is in the allowedStatusCodes array
+     */
+    enabled: boolean;
+
+    /**
+     * Array of status codes that are allowed to update the mock
+     * Default is [200]
+     */
+    allowedStatusCodes?: number[];
+
+    /**
+     * When true, will update mock even if response body differs from current mock
+     * Default is false
+     */
+    forceUpdate?: boolean;
+}
+
 export interface MockApi {
     /**
      * Mock a GET request to the specified URL
@@ -39,4 +59,30 @@ export interface MockApi {
      * Save recorded responses to mock files
      */
     saveRecordedResponses(): Promise<void>;
+
+    /**
+     * Enable/disable update mode for API calls
+     * When enabled, actual API responses will update existing mock files
+     */
+    setUpdateMode(enabled: boolean): void;
+
+    /**
+     * Get current update mode status
+     */
+    isUpdateMode(): boolean;
+
+    /**
+     * Set update policy for a specific mock
+     */
+    setUpdatePolicy(url: string | RegExp, policy: UpdatePolicy): void;
+
+    /**
+     * Get update policy for a specific mock
+     */
+    getUpdatePolicy(url: string | RegExp): UpdatePolicy | undefined;
+
+    /**
+     * Clear all update policies
+     */
+    clearUpdatePolicies(): void;
 } 
