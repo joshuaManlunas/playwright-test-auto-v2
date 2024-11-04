@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { logger } from '@/Framework.Initialise';
 
-test.only('@SMOKE @API mocking with recording works as expected', async ({ page, mockApi }) => {
+test('@SMOKE @API mocking with recording works as expected', async ({ page, mockApi }) => {
     // First run with recording mode to capture actual responses
     mockApi.setRecordMode(true);
 
@@ -14,41 +14,41 @@ test.only('@SMOKE @API mocking with recording works as expected', async ({ page,
     expect(liveResponse.status()).toBe(200);
 
     const liveResponseData = await liveResponse.json();
-    logger.info(`Live response data: ${JSON.stringify(liveResponseData)}`);
+
     // Save recorded responses
     mockApi.setUrl(liveResponse.url()).setMethod('GET').setResponse(liveResponseData);
 
     await mockApi.saveRecordedResponses();
 
-    // // Switch to mock mode
-    // mockApi.setRecordMode(false);
+    // Switch to mock mode
+    mockApi.setRecordMode(false);
 
-    // // Generate the same filename that MockApiImpl creates
-    // const fileName = `get-${url.replace(/[^a-zA-Z0-9]/g, '_')}.json`;
+    // Generate the same filename that MockApiImpl creates
+    const fileName = `get-${url.replace(/[^a-zA-Z0-9]/g, '_')}.json`;
 
     // // Load the recorded mock data
-    // const mockDataStore = MockDataStore.getInstance();
-    // const mockUsers = await mockDataStore.loadMockData(fileName);
+    const mockDataStore = MockDataStore.getInstance();
+    const mockUsers = await mockDataStore.loadMockData(fileName);
 
     // // Set up mock using recorded data
-    // await mockApi.mockGet(url, mockUsers);
+    await mockApi.mockGet(url, mockUsers);
 
     // // Verify mock works
-    // const mockedResponse = await page.request.get(url);
-    // expect(mockedResponse.status()).toBe(200);
+    const mockedResponse = await page.request.get(url);
+    expect(mockedResponse.status()).toBe(200);
 
-    // const responseData = await mockedResponse.json();
-    // expect(responseData).toEqual(mockUsers.body);
+    const responseData = await mockedResponse.json();
+    expect(responseData).toEqual(mockUsers);
 
     // // Clean up
-    // await mockApi.clearMocks();
+    await mockApi.clearMocks();
 });
 
-test('@SMOKE API mocking works with existing mock data', async ({ page, mockApi }) => {
-    const mockDataStore = MockDataStore.getInstance();
-    const mockUsers = await mockDataStore.loadMockData('users.json');
-
+test('@SMOKE @API mocking works with existing mock data', async ({ page, mockApi }) => {
     const url = 'https://jsonplaceholder.typicode.com/users';
+    const mockDataStore = MockDataStore.getInstance();
+    const mockUsers = await mockDataStore.loadMockData(`get-${url.replace(/[^a-zA-Z0-9]/g, '_')}.json`);
+
     await mockApi.mockGet(url, {
         status: 200,
         body: mockUsers
