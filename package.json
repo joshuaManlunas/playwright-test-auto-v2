@@ -12,11 +12,13 @@
     "allure:report": "npm run allure:generate && npm run allure:open"
   },
   "keywords": [],
-  "author": "",
+  "author": "joshuaManlunas",
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.48.2",
     "@types/lodash": "^4.17.13",
+    "@types/proxymise": "^1.0.3",
+    "proxymise": "^1.0.2",
     "ts-node": "^10.9.2"
   },
   "dependencies": {

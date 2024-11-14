@@ -34,39 +34,43 @@ export class MockApiImpl implements MockApi {
         return this;
     }
 
-    setRecordMode(enabled: boolean): void {
+    async setRecordMode(enabled: boolean): Promise<this> {
         this.recordMode = enabled;
         logger.info(`Mock recording mode ${enabled ? 'enabled' : 'disabled'}`);
+        return this;
     }
 
     isRecordMode(): boolean {
         return this.recordMode;
     }
 
-    setUpdateMode(enabled: boolean): void {
+    async setUpdateMode(enabled: boolean): Promise<this> {
         this.updateMode = enabled;
         logger.info(`Mock update mode ${enabled ? 'enabled' : 'disabled'}`);
+        return this;
     }
 
     isUpdateMode(): boolean {
         return this.updateMode;
     }
 
-    public setUpdatePolicy(url: string | RegExp, policy: UpdatePolicy): void {
+    public async setUpdatePolicy(url: string | RegExp, policy: UpdatePolicy): Promise<this> {
         const urlKey = url.toString();
         this.updatePolicies.set(urlKey, {
             enabled: policy.enabled,
             allowedStatusCodes: policy.allowedStatusCodes || [200],
             forceUpdate: policy.forceUpdate || false
         });
+        return this;
     }
 
     public getUpdatePolicy(url: string | RegExp): UpdatePolicy | undefined {
         return this.updatePolicies.get(url.toString());
     }
 
-    public clearUpdatePolicies(): void {
+    public async clearUpdatePolicies(): Promise<this> {
         this.updatePolicies.clear();
+        return this;
     }
 
     private async recordResponse(method: string, url: string, response: any): Promise<void> {
@@ -153,13 +157,13 @@ export class MockApiImpl implements MockApi {
         return JSON.stringify(newResponse) === JSON.stringify(existingResponse);
     }
 
-    async saveRecordedResponses(): Promise<void> {
+    async saveRecordedResponses(): Promise<this> {
 
         this.recordResponse(this.method, this.url, this.response);
 
         if (this.recordedResponses.size === 0) {
             logger.info('No responses recorded');
-            return;
+            return this;
         }
 
         try {
@@ -190,26 +194,32 @@ export class MockApiImpl implements MockApi {
             logger.error(`Failed to ensure mock data directory exists:`, error);
             throw error; // Rethrow as this is a critical error
         }
+        return this;
     }
 
-    async mockGet(url: string | RegExp, response: any): Promise<void> {
+    async mockGet(url: string | RegExp, response: any): Promise<this> {
         await this.setupMock('GET', url, response);
+        return this;
     }
 
-    async mockPost(url: string | RegExp, response: any): Promise<void> {
+    async mockPost(url: string | RegExp, response: any): Promise<this> {
         await this.setupMock('POST', url, response);
+        return this;
     }
 
-    async mockPut(url: string | RegExp, response: any): Promise<void> {
+    async mockPut(url: string | RegExp, response: any): Promise<this> {
         await this.setupMock('PUT', url, response);
+        return this;
     }
 
-    async mockDelete(url: string | RegExp, response: any): Promise<void> {
+    async mockDelete(url: string | RegExp, response: any): Promise<this> {
         await this.setupMock('DELETE', url, response);
+        return this;
     }
 
-    async clearMocks(): Promise<void> {
+    async clearMocks(): Promise<this> {
         await this.page.unroute('**/*');
         logger.info('Cleared all API mocks');
+        return this;
     }
 } 

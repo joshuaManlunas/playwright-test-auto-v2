@@ -16,9 +16,8 @@ test('@SMOKE @API mocking with recording works as expected', async ({ page, mock
     const liveResponseData = await liveResponse.json();
 
     // Save recorded responses
-    mockApi.setUrl(liveResponse.url()).setMethod('GET').setResponse(liveResponseData);
-
-    await mockApi.saveRecordedResponses();
+    mockApi.setUrl(liveResponse.url()).setMethod('GET').setResponse(liveResponseData)
+        .saveRecordedResponses();
 
     // Switch to mock mode
     mockApi.setRecordMode(false);
