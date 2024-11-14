@@ -22,33 +22,33 @@ export interface MockApi {
     /**
      * Mock a GET request to the specified URL
      */
-    mockGet(url: string | RegExp, response: any): Promise<void>;
+    mockGet(url: string | RegExp, response: any): Promise<MockApi>;
 
     /**
      * Mock a POST request to the specified URL
      */
-    mockPost(url: string | RegExp, response: any): Promise<void>;
+    mockPost(url: string | RegExp, response: any): Promise<MockApi>;
 
     /**
      * Mock a PUT request to the specified URL
      */
-    mockPut(url: string | RegExp, response: any): Promise<void>;
+    mockPut(url: string | RegExp, response: any): Promise<MockApi>;
 
     /**
      * Mock a DELETE request to the specified URL
      */
-    mockDelete(url: string | RegExp, response: any): Promise<void>;
+    mockDelete(url: string | RegExp, response: any): Promise<MockApi>;
 
     /**
      * Clear all mocks
      */
-    clearMocks(): Promise<void>;
+    clearMocks(): Promise<MockApi>;
 
     /**
      * Enable/disable recording mode for API calls
      * When enabled, actual API responses will be saved as mock data
      */
-    setRecordMode(enabled: boolean): void;
+    setRecordMode(enabled: boolean): Promise<MockApi>;
 
     /**
      * Get current recording mode status
@@ -58,13 +58,13 @@ export interface MockApi {
     /**
      * Save recorded responses to mock files
      */
-    saveRecordedResponses(): Promise<void>;
+    saveRecordedResponses(): Promise<MockApi>;
 
     /**
      * Enable/disable update mode for API calls
      * When enabled, actual API responses will update existing mock files
      */
-    setUpdateMode(enabled: boolean): void;
+    setUpdateMode(enabled: boolean): Promise<MockApi>;
 
     /**
      * Get current update mode status
@@ -74,7 +74,7 @@ export interface MockApi {
     /**
      * Set update policy for a specific mock
      */
-    setUpdatePolicy(url: string | RegExp, policy: UpdatePolicy): void;
+    setUpdatePolicy(url: string | RegExp, policy: UpdatePolicy): Promise<MockApi>;
 
     /**
      * Get update policy for a specific mock
@@ -84,5 +84,5 @@ export interface MockApi {
     /**
      * Clear all update policies
      */
-    clearUpdatePolicies(): void;
+    clearUpdatePolicies(): Promise<MockApi>;
 } 

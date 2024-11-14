@@ -3,7 +3,7 @@ import { TestDataStorePublisher } from "../store/TestDataStorePublisher";
 import { PageObjectTest } from "../src/core/page-objects/PageObjectTest";
 import { ApiMux } from "../src/core/api-objects/ApiMux";
 import { MockApiImpl } from "../src/core/api-objects/MockApiImpl";
-
+import proxymise from "proxymise";
 
 type TestDataPublisher = {
     testDataPublisher: TestDataStorePublisher
@@ -46,7 +46,7 @@ export const test = base.extend<TestDataPublisher & PageObjects & ApiObjects & M
     },
     apiMux: async ({ page }, use) => { await use(new ApiMux(page)) },
     mockApi: async ({ page }, use) => {
-        const mockApi = new MockApiImpl(page);
+        const mockApi = await proxymise(new MockApiImpl(page));
         await use(mockApi);
     }
 })
