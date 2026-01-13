@@ -24,7 +24,7 @@
   "dependencies": {
     "@types/fs-extra": "^11.0.4",
     "allure-playwright": "^3.0.6",
-    "body-parser": "^1.20.3",
+    "body-parser": "^1.20.4",
     "crypto-js": "^4.2.0",
     "dotenv": "^16.4.5",
     "fs-extra": "^11.2.0",
